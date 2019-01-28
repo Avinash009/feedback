@@ -18,8 +18,6 @@ class QuestionController extends Controller
     
     public function getList($id = NULL)
     {
-        print_r($id);
-        die();
         if(count(Question::all()->where("project_id", $id)) > 0)
         {
             $questons = Question::all()->where("project_id", $id);
