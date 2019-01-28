@@ -37,6 +37,10 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'project.create'
     ]);
     
+    Route::get('/project/{id}/edit', [
+        'uses' => 'ProjectController@edit',
+        'as' => 'project.edit'
+    ]);
     Route::get('/project/{id}', [
         'uses' => 'QuestionController@view',
         'as' => 'questions.view'

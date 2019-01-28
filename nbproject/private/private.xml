@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/feedback/working/project/resources/views/project/showProjects.blade.php</file>
             <file>file:/F:/feedback/working/project/app/Http/Controllers/QuestionController.php</file>
-            <file>file:/F:/feedback/working/project/app/Http/Controllers/ProjectController.php</file>
-            <file>file:/F:/feedback/working/project/public/css/custom.css</file>
             <file>file:/F:/feedback/working/project/resources/views/project/question/view.blade.php</file>
             <file>file:/F:/feedback/working/project/routes/web.php</file>
+            <file>file:/F:/feedback/working/project/resources/views/includes/question-modal.blade.php</file>
+            <file>file:/F:/feedback/working/project/resources/views/includes/project-modal.blade.php</file>
             <file>file:/F:/feedback/working/project/resources/views/project/view.blade.php</file>
         </group>
     </open-files>

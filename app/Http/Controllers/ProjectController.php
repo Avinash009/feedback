@@ -101,7 +101,8 @@ class ProjectController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        //
+        print_r($id);
+        die();
     }
 
     /**
