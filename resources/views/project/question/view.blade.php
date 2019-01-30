@@ -70,6 +70,7 @@
             }
         });
         var i = 0;
+        var p = 0;
         var max = 10;
         $(".add-q-options").on("click", function(){
             i++;
@@ -77,8 +78,25 @@
             {
                 return;
             }
-            var option = "<div class='option'><input type='text' name='options["+i+"]'></div><br>";
+            var option = "<div class='option mb-2'><input type='text' name='options["+i+"]'><p class='fa fa-times-circle del-option'></p></div>";
             $(".options-text").append(option);
+        });
+        
+        $(".add-q-perseptions").on("click", function(){
+            p++;
+            if(i > max)
+            {
+                return;
+            }
+            var perseption = "<div class='perseption mb-2'><input type='text' name='perseptions["+p+"]'><p class='fa fa-times-circle del-perseption'></p></div>";
+            $(".perseptions-text").append(perseption);
+        });
+        
+        $('body').on("click", ".del-option, .del-perseption", function(){
+            console.log('close')
+            $(this).closest(".option").remove();
+            $(this).closest(".perseption").remove();
+            i--;
         })
     }
 </script>

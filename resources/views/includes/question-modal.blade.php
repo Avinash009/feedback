@@ -1,5 +1,5 @@
 <div class="modal" id="question-modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
             <!-- Modal Header -->
@@ -19,26 +19,34 @@
                         <span class="error"></span>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="options-info">Add Your Options</div>
-                            <div class="form-group options">
-                                <div class="options-text">
-                                </div>
-                                <div class="add-options">
-                                    <p class="fa fa-plus  add-q-options">op</p> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="perseptions-info">Add Your Perseptions</div>
-                            <div class="form-group perseptions">
-                                <div class="perseptions-text">
+                        <!--<div class="col-md-12">-->
+                            <div class="col">
+                                <div class="d-inline">
+                                    <div class="options-info">Add Your Options</div>
+                                    <div class="form-group options">
+                                        <div class="options-text">
+                                        </div>
+                                        <div class="add-options">
+                                            <p class="fa fa-plus fa-lg add-q-options"></p> 
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="add-perseption">
-                                    <p class="fa fa-plus  add-q-perseptions">pre</p> 
+                            <div class="col">
+                                <div class="d-inline">
+                                    <div class="perseptions-info">Add Your Perseptions</div>
+                                    <div class="form-group perseptions">
+                                        <div class="perseptions-text">
+                                        </div>
+                                    </div>
+                                    <div class="add-perseption">
+                                        <p class="fa fa-plus fa-lg add-q-perseptions"></p> 
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        <!--</div>-->
+                        
+                        
                     </div>
                 </div>
 
