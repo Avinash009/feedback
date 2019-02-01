@@ -81,10 +81,8 @@ class QuestionController extends Controller {
 
         $question_options = '';
         if (!empty($question->id)) {
-            $question_options = QuestionOption::where('question_id', '=', $question->id)->get();
+//            $question_options = QuestionOption::where('question_id', '=', $question->id)->get();
 
-            print_r($question_options);
-            die();
             foreach ($options as $option) {
                 QuestionOption::updateOrCreate(['question_id' => $question->id, 'option' => $option], [
                     'option' => $option,
