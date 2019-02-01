@@ -36,6 +36,8 @@
     var questions_list = $('.questions-list');
     var built_html = '';
     var loader = $('.loader');
+    var question_form = $('#question-form');
+//    $('.project-id').val(project_id);
     getAllQuestions();
     function getAllQuestions()
     {
@@ -56,7 +58,7 @@
                 }
                 else
                 {
-                    projects_empty.hide();
+                    questions_empty.hide();
 
                     $.each(response.questions, function () {
                         var question_cards_html = $('#question-cards').html();
@@ -99,6 +101,19 @@
             i--;
         })
     }
+    
+    question_form.on('submit', function(e){
+        e.preventDefault();
+        var question_form_url = $(this).attr('action');
+        $.ajax({
+            url:question_form_url,
+            type:"POST",
+            data:$(this).serialize(),
+            success:function(response){
+                console.log(response);
+            }
+        });
+    });
 </script>
 @endsection
   

@@ -18,6 +18,7 @@
 Auth::routes();
 
 Route::pattern('id', '[0-9]+');
+Route::pattern('question_id', '[0-9]+');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -51,6 +52,10 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'questions.list'
     ]);
     
+    Route::post('/project/{id}/question/{question_id}/create', [
+        'uses' => 'QuestionController@create',
+        'as' => 'question.create'
+    ]);
 });
 
 
@@ -69,7 +74,3 @@ Route::group(['middleware' => 'auth'], function() {
 //   'as'   => 'question.view'
 //]);
 
-Route::get('/question/create', [
-    'uses' => 'QuestionController@create',
-    'as' => 'question.create'
-]);
