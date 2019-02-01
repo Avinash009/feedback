@@ -1,0 +1,7 @@
+$theme-default: (
+  variables: (
+    color: red,
+    )
+  );
+
+@include themable(theme-default, $theme-default);
