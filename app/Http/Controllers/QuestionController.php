@@ -12,7 +12,6 @@ use Auth;
 
 class QuestionController extends Controller {
 
-
     /**
      * Display a listing of the resource.
      *
@@ -81,18 +80,37 @@ class QuestionController extends Controller {
 
         $question_options = '';
         if (!empty($question->id)) {
-//            $question_options = QuestionOption::where('question_id', '=', $question->id)->get();
-
-            foreach ($options as $option) {
-                QuestionOption::updateOrCreate(['question_id' => $question->id, 'option' => $option], [
+            $question_options = QuestionOption::where('question_id', '=', $question->id)->get();
+            $database_options = [];
+            if (!$question_options->isEmpty()) {
+                foreach ($question_options as $option) {
+                    $value = $option->id;
+                    $database_options[] = $value;
+                }
+            }
+//            print_r($options);
+//            print_r($database_options);
+//            die();
+            foreach ($options as $index => $option) {
+                $option_id = $question_options->isEmpty() ? -1 : $database_options[$index];
+                QuestionOption::updateOrCreate(['id' => $option_id], [
                     'option' => $option,
                     'question_id' => $question->id,
                     'project_id' => $id,
                 ]);
             }
+            
+            $question_perseptions = Perseption::where('question_id', '=', $question->id)->get();
+            $database_perseptions = [];
+            if (!$question_perseptions->isEmpty()) {
+                foreach ($question_perseptions as $perseption) {
+                    $database_perseptions[] = $perseption->id;
+                }
+            }
 
-            foreach ($perseptions as $perseption) {
-                Perseption::updateOrCreate(['question_id' => $question->id, 'perseption' => $perseption], [
+            foreach ($perseptions as $index => $perseption) {
+                $perseption_id = $question_perseptions->isEmpty() ? -1 : $database_options[$index];
+                Perseption::updateOrCreate(['id' => $perseption_id], [
                     'perseption' => $perseption,
                     'question_id' => $question->id,
                     'project_id' => $id,
