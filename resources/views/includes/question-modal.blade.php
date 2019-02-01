@@ -15,8 +15,6 @@
                     <div class="form-group">
                         {{ csrf_field() }}
                         <label for="question">Question:</label>
-<!--                        <input type='hidden' name="project_id" class="project-id" value=''>
-                        <input type='hidden' name="question_id" class="question-id" value='-1'>-->
                         <input type="text" class="form-control" name="question" placeholder="rate the taste">
                         <span class="error"></span>
                     </div>

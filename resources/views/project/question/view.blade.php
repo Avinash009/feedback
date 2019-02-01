@@ -100,24 +100,6 @@
             $(this).closest(".perseption").remove();
             i--;
         })
-        $('body').on("submit", "#project-form", function(){
-            var questionData = $(this).serializeArray();
-            console.log(questionData)
-            $.ajax({
-               url:"{{ route('question.store') }}",
-               type:"post",
-               data:questionData,
-               success:function(data){
-                   console.log(data)
-               },
-               error: function(data)
-               {
-                   console.log(data)
-                   
-               }
-            });
-            
-        })
     }
     
     question_form.on('submit', function(e){
