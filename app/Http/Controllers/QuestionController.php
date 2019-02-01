@@ -12,6 +12,7 @@ use Auth;
 
 class QuestionController extends Controller {
 
+
     /**
      * Display a listing of the resource.
      *
@@ -81,7 +82,7 @@ class QuestionController extends Controller {
         $question_options = '';
         if (!empty($question->id)) {
             $question_options = QuestionOption::where('question_id', '=', $question->id)->get();
-            
+
             print_r($question_options);
             die();
             foreach ($options as $option) {
@@ -102,16 +103,6 @@ class QuestionController extends Controller {
         } else {
             return Response()->json(array("500" => "some thing went wrong"));
         }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request) {
-        
     }
 
     /**

@@ -29,7 +29,7 @@
                                         <div class="options-text">
                                         </div>
                                         <div class="add-options">
-                                            <p class="fa fa-plus fa-lg add-q-options"></p> 
+                                            <p class="fa fa-plus fa-lg add-q-options"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -42,13 +42,13 @@
                                         </div>
                                     </div>
                                     <div class="add-perseption">
-                                        <p class="fa fa-plus fa-lg add-q-perseptions"></p> 
+                                        <p class="fa fa-plus fa-lg add-q-perseptions"></p>
                                     </div>
                                 </div>
                             </div>
                         <!--</div>-->
-                        
-                        
+
+
                     </div>
                 </div>
 
@@ -61,4 +61,3 @@
         </div>
     </div>
 </div>
-

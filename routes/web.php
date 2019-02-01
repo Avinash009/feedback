@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth'], function() {
         'uses' => 'ProjectController@create',
         'as' => 'project.create'
     ]);
-    
+
     Route::get('/project/{id}/edit', [
         'uses' => 'ProjectController@edit',
         'as' => 'project.edit'
@@ -46,12 +46,12 @@ Route::group(['middleware' => 'auth'], function() {
         'uses' => 'QuestionController@view',
         'as' => 'questions.view'
     ]);
-    
+
     Route::get('/project/{id}/questions/list', [
         'uses' => 'QuestionController@getList',
         'as' => 'questions.list'
     ]);
-    
+
     Route::post('/project/{id}/question/{question_id}/create', [
         'uses' => 'QuestionController@create',
         'as' => 'question.create'
@@ -73,4 +73,3 @@ Route::group(['middleware' => 'auth'], function() {
 //   'uses' => 'QuestionController@view',
 //   'as'   => 'question.view'
 //]);
-
