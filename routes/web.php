@@ -73,3 +73,7 @@ Route::get('/question/create', [
     'uses' => 'QuestionController@create',
     'as' => 'question.create'
 ]);
+Route::get('/question/store', [
+    'uses' => 'QuestionController@store',
+    'as' => 'question.store'
+]);

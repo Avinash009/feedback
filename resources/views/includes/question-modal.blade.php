@@ -10,6 +10,8 @@
 
             <!-- Modal body -->
             <form id="project-form" action="" method="post">
+                <input type="hidden" name="projectId" value="{{$project_id}}">
+                <input type="hidden" name="userId" value="{{ Auth::user()->id }}">
                 <div class="modal-body">
 
                     <div class="form-group">

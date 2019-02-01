@@ -5,7 +5,7 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#question-modal">
             Create question
         </button>
-    </div>
+    </div>  
     <div class="card empty-questions d-none">
         <div class="card-body">
             <div class="text-center message">
@@ -97,6 +97,24 @@
             $(this).closest(".option").remove();
             $(this).closest(".perseption").remove();
             i--;
+        })
+        $('body').on("submit", "#project-form", function(){
+            var questionData = $(this).serializeArray();
+            console.log(questionData)
+            $.ajax({
+               url:"{{ route('question.store') }}",
+               type:"post",
+               data:questionData,
+               success:function(data){
+                   console.log(data)
+               },
+               error: function(data)
+               {
+                   console.log(data)
+                   
+               }
+            });
+            
         })
     }
 </script>
