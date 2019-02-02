@@ -2,7 +2,7 @@
 @section('content')
 <div class="question-view">
     <div class="create-question-top text-right">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#question-modal">
+        <button type="button" class="create-modal btn btn-primary" data-toggle="modal" data-target="#question-modal">
             Create question
         </button>
     </div>  
@@ -37,6 +37,7 @@
     var built_html = '';
     var loader = $('.loader');
     var question_form = $('#question-form');
+    var create_modal = $('.create-modal');
 //    $('.project-id').val(project_id);
     getAllQuestions();
     function getAllQuestions()
@@ -61,7 +62,7 @@
 
                     $.each(response.questions, function () {
                         var question_cards_html = $('#question-cards').html();
-                        question_cards_html = question_cards_html.replace("{question_name}", this.name);
+                        question_cards_html = question_cards_html.replace("{question_name}", this.question);
                         question_cards_html = question_cards_html.replace("{created_at}", this.created_at);
                         built_html += question_cards_html;
                     });
@@ -108,7 +109,20 @@
 
         });
     }
-
+    create_modal.on('click',function(e){
+        e.preventDefault();
+        var url = "{{ route('question.open.modal', [':id', ':question_id']) }}";
+        url = url.replace(/:id/, project_id);
+        url = url.replace(/:question_id/, -1);
+        console.log(url);
+        $.ajax({
+            url:url,
+            type:"GET",
+            success:function(response){
+                console.log(response);
+            }
+        });
+    });
     question_form.on('submit', function (e) {
         e.preventDefault();
         var question_form_url = $(this).attr('action');

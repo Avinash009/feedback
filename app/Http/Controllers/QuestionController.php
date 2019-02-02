@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\View;
+//use App\Http\Controllers\View;
 use Validator;
 use Illuminate\Http\Request;
 use App\Question;
 use App\QuestionOption;
 use App\Perseption;
 use Auth;
+use View;
 
 class QuestionController extends Controller {
 
@@ -36,7 +37,26 @@ class QuestionController extends Controller {
     function showQustions($questions) {
         return view('Question/listQuestions', ["allQuestions" => $questions]);
     }
+    public function openModal($id, $question_id)
+    {
+        $question = '';
+        if($question_id == '-1')
+        {
+           $question = new Question(); 
+        }
+        else
+        {
+           $question = Question::find($question_id); 
+        }
 
+        $view = View::make('includes/question-modal', [
+            'question' => $question,
+            'project_id' => $id
+        ]);
+        
+        $Question_modal_html = $view->render();
+        return $Question_modal_html;
+    }
     /**
      * Show the form for creating a new resource.
      *

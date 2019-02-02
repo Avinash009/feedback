@@ -18,7 +18,7 @@
 Auth::routes();
 
 Route::pattern('id', '[0-9]+');
-Route::pattern('question_id', '[0-9]+');
+Route::pattern('question_id', '^-?[0-9]\d*(\.\d+)?$');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -51,10 +51,20 @@ Route::group(['middleware' => 'auth'], function() {
         'uses' => 'QuestionController@getList',
         'as' => 'questions.list'
     ]);
-
+    
+    Route::get('/project/{id}/question/{question_id}/open-modal',[
+        'uses' => 'QuestionController@openModal',
+        'as'   => 'question.open.modal'
+    ]);
+    
     Route::post('/project/{id}/question/{question_id}/create', [
         'uses' => 'QuestionController@create',
         'as' => 'question.create'
+    ]);
+    
+    Route::post('/project/{id}/question/{question_id}/edit', [
+        'uses' => 'QuestionController@create',
+        'as' => 'question.edit'
     ]);
 });
 
