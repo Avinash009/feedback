@@ -1,0 +1,31 @@
+@mixin themable($theme-name, $theme-map)
+{
+  .#{$theme-name}
+  {
+    $section_variables: map_get($theme-map, 'variables');
+    @each $section, $map in $theme-map {
+      @if $section != 'variables' {
+        $selector: '.' + $section;
+        @if map-has-key($map, 'selector'){
+          $selector: map_get($map, 'selector');
+        }
+        #{$selector} {
+          @each $key, $val in $map {
+            @if $key != 'selector' {
+              @if map-has-key($section_variables, $val){
+                #{$key}: map_get($section_variables, $val);
+              }@else{
+                #{$key}: #{$val};
+              }
+            }
+          }                   
+        }
+      }
+    }
+
+    /*Your Code here*/
+    
+
+  }
+}
+
