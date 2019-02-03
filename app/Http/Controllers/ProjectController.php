@@ -49,7 +49,7 @@ class ProjectController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request) {
+    public function create(Request $request, $project_id) {
         $validator = Validator::make($request->all(), [
                     'projectName' => 'required',
         ]);
@@ -59,7 +59,7 @@ class ProjectController extends Controller {
                         'errors' => $validator->getMessageBag()->toArray()
             ));
         }
-        $newProject = Project::create([
+        $newProject = Project::updateOrCreate(['id' => $project_id],[
             'name' => $request->projectName,
             'user_id' => Auth::user()->id,
         ]);
@@ -101,7 +101,7 @@ class ProjectController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        print_r($id);
+       return Project::find($id);
         die();
     }
 

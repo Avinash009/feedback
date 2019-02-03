@@ -66,24 +66,30 @@
                     loader.hide();
                     
                     $('.edit-project').on('click',function(){
-                        editProject($(this).data('project_id'));
+                        var project_id = $(this).data('project_id');
+                        var project_id = $('.edit-project').data('project_id');
+                        var project_modal = $("#project-modal");
+                            project_modal.modal("show");
+                            $(".project-modal-title").html("Edit Project");
+                            $(".project-submit").html("Update");
+                        var url = '{{ route("project.edit", ":id") }}';
+                            //url.replace(/{id}/g, $(this).data('project_id'))    
+                            url = url.replace(':id', project_id);
+                            console.log(url)
+                            $.ajax({
+                                url:url,
+                                type:'GET',
+                                success:function(project){
+                                    console.log(project);
+                                    project_modal.find(".projectName").val(project.name);
+                                    project_modal.find(".projectId").val(project.id);
+                                }
+                            });
                     });
                 }
             }
         });
     }
     getProjects();
-    function editProject(project_id)
-    {
-        var url = '{{ route("project.edit", ":id") }}';
-        url = url.replace(':id', project_id);
-        $.ajax({
-            url:url,
-            type:'GET',
-            success:function(response){
-                console.log(response);
-            }
-        });
-    }
 </script>
 @endsection

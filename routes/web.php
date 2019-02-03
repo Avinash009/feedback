@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'projects.list'
     ]);
 
-    Route::post('/project/create', [
+    Route::post('/project/{project_id}/create', [
         'uses' => 'ProjectController@create',
         'as' => 'project.create'
     ]);
