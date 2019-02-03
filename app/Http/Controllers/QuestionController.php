@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\View;
+//use App\Http\Controllers\View;
 use Validator;
 use Illuminate\Http\Request;
 use App\Question;
 use App\QuestionOption;
 use App\Perseption;
 use Auth;
+use View;
 
 class QuestionController extends Controller {
-
 
     /**
      * Display a listing of the resource.
@@ -37,7 +37,26 @@ class QuestionController extends Controller {
     function showQustions($questions) {
         return view('Question/listQuestions', ["allQuestions" => $questions]);
     }
+    public function openModal($id, $question_id)
+    {
+        $question = '';
+        if($question_id == '-1')
+        {
+           $question = new Question(); 
+        }
+        else
+        {
+           $question = Question::find($question_id); 
+        }
 
+        $view = View::make('includes/question-modal', [
+            'question' => $question,
+            'project_id' => $id
+        ]);
+        
+        $Question_modal_html = $view->render();
+        return $Question_modal_html;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -81,18 +100,37 @@ class QuestionController extends Controller {
 
         $question_options = '';
         if (!empty($question->id)) {
-//            $question_options = QuestionOption::where('question_id', '=', $question->id)->get();
-
-            foreach ($options as $option) {
-                QuestionOption::updateOrCreate(['question_id' => $question->id, 'option' => $option], [
+            $question_options = QuestionOption::where('question_id', '=', $question->id)->get();
+            $database_options = [];
+            if (!$question_options->isEmpty()) {
+                foreach ($question_options as $option) {
+                    $value = $option->id;
+                    $database_options[] = $value;
+                }
+            }
+//            print_r($options);
+//            print_r($database_options);
+//            die();
+            foreach ($options as $index => $option) {
+                $option_id = $question_options->isEmpty() ? -1 : $database_options[$index];
+                QuestionOption::updateOrCreate(['id' => $option_id], [
                     'option' => $option,
                     'question_id' => $question->id,
                     'project_id' => $id,
                 ]);
             }
+            
+            $question_perseptions = Perseption::where('question_id', '=', $question->id)->get();
+            $database_perseptions = [];
+            if (!$question_perseptions->isEmpty()) {
+                foreach ($question_perseptions as $perseption) {
+                    $database_perseptions[] = $perseption->id;
+                }
+            }
 
-            foreach ($perseptions as $perseption) {
-                Perseption::updateOrCreate(['question_id' => $question->id, 'perseption' => $perseption], [
+            foreach ($perseptions as $index => $perseption) {
+                $perseption_id = $question_perseptions->isEmpty() ? -1 : $database_options[$index];
+                Perseption::updateOrCreate(['id' => $perseption_id], [
                     'perseption' => $perseption,
                     'question_id' => $question->id,
                     'project_id' => $id,

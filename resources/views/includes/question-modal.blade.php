@@ -9,7 +9,7 @@
             </div>
 
             <!-- Modal body -->
-            <form id="question-form" action="{{route('question.create',['id'=>$project_id,'question_id' =>'1'])}}">
+            <form id="question-form" action="{{route('question.create',['id'=>$project_id,'question_id' =>'-1'])}}">
                 <div class="modal-body">
 
                     <div class="form-group">
