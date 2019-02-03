@@ -4,46 +4,58 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Create question</h4>
+
+                <h4 class="modal-title"><?php echo empty($question->id) ? "Create question" : "Edit question" ?></h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
-            <form id="question-form" action="{{route('question.create',['id'=>$project_id,'question_id' =>'-1'])}}">
+            <?php $id = empty($question->id) ? "-1" : $question->id ?>
+            <form id="question-form" action="{{route('question.create',['id'=>$project_id,'question_id' =>$id])}}">
                 <div class="modal-body">
 
                     <div class="form-group">
                         {{ csrf_field() }}
                         <label for="question">Question:</label>
-                        <input type="text" class="form-control" name="question" placeholder="rate the taste">
+                        <input type="text" class="form-control" name="question" placeholder="rate the taste" value="<?php echo empty($question->question) ? "" : $question->question ?>">
                         <span class="error"></span>
                     </div>
                     <div class="row">
                         <!--<div class="col-md-12">-->
-                            <div class="col">
-                                <div class="d-inline">
-                                    <div class="options-info">Add Your Options</div>
-                                    <div class="form-group options">
-                                        <div class="options-text">
-                                        </div>
-                                        <div class="add-options">
-                                            <p class="fa fa-plus fa-lg add-q-options"></p>
-                                        </div>
+                        <div class="col">
+                            <div class="d-inline">
+                                <div class="options-info">Add Your Options</div>
+                                <div class="form-group options">
+                                    <div class="options-text">
+                                        <?php if (!empty($question_options)): ?>
+                                            @foreach($question_options as $option)
+                                            <div class='option mb-2'><input type='text' value="<?php echo $option->option ?>" name='options[]'><p class='fa fa-times-circle del-option'></p></div>
+                                            @endforeach
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="add-options">
+                                        <p class="fa fa-plus fa-lg add-q-options"></p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="d-inline">
-                                    <div class="perseptions-info">Add Your Perseptions</div>
-                                    <div class="form-group perseptions">
-                                        <div class="perseptions-text">
-                                        </div>
-                                    </div>
-                                    <div class="add-perseption">
-                                        <p class="fa fa-plus fa-lg add-q-perseptions"></p>
+                        </div>
+                        <div class="col">
+                            <div class="d-inline">
+                                <div class="perseptions-info">Add Your Perseptions</div>
+                                <div class="form-group perseptions">
+                                    <div class="perseptions-text">
+                                        <?php if (!empty($perseptions)): ?>
+                                            @foreach($perseptions as $perseption)
+                                            <div class='perseption mb-2'><input type='text' value='<?php echo $perseption->perseption ?>' name='perseptions[]'><p class='fa fa-times-circle del-perseption'></p></div>
+                                            @endforeach
+                                        <?php endif; ?>
                                     </div>
                                 </div>
+                                <div class="add-perseption">
+                                    <p class="fa fa-plus fa-lg add-q-perseptions"></p>
+                                </div>
                             </div>
+                        </div>
                         <!--</div>-->
 
 
