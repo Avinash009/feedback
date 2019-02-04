@@ -115,9 +115,7 @@ class QuestionController extends Controller {
                     $database_options[] = $value;
                 }
             }
-//            print_r($options);
-//            print_r($database_options);
-//            die();
+            
             foreach ($options as $index => $option) {
                 $option_id = $question_options->isEmpty() ? -1 : $database_options[$index];
                 QuestionOption::updateOrCreate(['id' => $option_id], [

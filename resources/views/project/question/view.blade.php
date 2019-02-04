@@ -42,6 +42,9 @@
     var question_form = $('#question-form');
     var create_modal = $('.create-modal');
     var edit_question = $('.edit-question');
+    var i = -1;
+    var p = -1;
+    var max = 10;
 //    $('.project-id').val(project_id);
     getAllQuestions();
     function getAllQuestions()
@@ -75,48 +78,11 @@
                     loader.hide();
                 }
                 console.log($('.edit-question'));
-                $('.edit-question').on('click', function(){
-                   editQuestion($(this).data('question_id')); 
+                $('.edit-question').on('click', function () {
+                    editQuestion($(this).data('question_id'));
                 });
-                
+
             }
-        });
-        var i = -1;
-        var p = -1;
-        var max = 10;
-        $(".add-q-options").on("click", function () {
-
-            if (i < max)
-            {
-                i++;
-                var option = "<div class='option mb-2'><input type='text' name='options[" + i + "]'><p class='fa fa-times-circle del-option'></p></div>";
-                $(".options-text").append(option);
-            }
-        });
-
-        $(".add-q-perseptions").on("click", function () {
-
-            if (p < max)
-            {
-                p++;
-
-                var perseption = "<div class='perseption mb-2'><input type='text' name='perseptions[" + p + "]'><p class='fa fa-times-circle del-perseption'></p></div>";
-                $(".perseptions-text").append(perseption);
-            }
-
-        });
-
-        $('body').on("click", ".del-option", function () {
-            $(this).closest(".option").remove();
-            i--;
-
-        });
-
-        $('body').on("click", ".del-perseption", function () {
-            console.log('close')
-            $(this).closest(".perseption").remove();
-            p--;
-
         });
     }
     create_modal.on('click', function (e) {
@@ -131,11 +97,44 @@
             success: function (response) {
                 $('.modal-section').html(response);
                 $('#question-modal').modal('show');
-               
+                $('#question-form').on('submit', function (e) {
+                    e.preventDefault();
+                    submitQuestionForm($(this).attr('action'), $(this).serialize());
+                });
+
+                $('.add-q-options').on("click", function (e) {
+                    if (i < max)
+                    {
+                        i++;
+                        var option = "<div class='option mb-2'><input type='text' name='options[]'><p class='fa fa-times-circle del-option'></p></div>";
+                        $(".options-text").append(option);
+                    }
+                });
+                $('.add-q-perseptions').on("click", function (e) {
+                    if (p < max)
+                    {
+                        p++;
+
+                        var perseption = "<div class='perseption mb-2'><input type='text' name='perseptions[]'><p class='fa fa-times-circle del-perseption'></p></div>";
+                        $(".perseptions-text").append(perseption);
+                    }
+                });
+
+                $('body').on("click", ".del-option", function () {
+                    $(this).closest(".option").remove();
+                    i--;
+
+                });
+
+                $('body').on("click", ".del-perseption", function () {
+                    $(this).closest(".perseption").remove();
+                    p--;
+
+                });
             }
         });
     });
-    
+
     function editQuestion(question_id)
     {
         var url = "{{route('question.open.modal',[':id', ':question_id'])}}";
@@ -148,16 +147,46 @@
                 console.log(response);
                 $('.modal-section').html(response);
                 $('#question-modal').modal('show');
-                 console.log($('#question-form'));
-                $('#question-form').on('submit', function(e){
+                console.log($('#question-form'));
+                $('#question-form').on('submit', function (e) {
                     e.preventDefault();
-                    submitQuestionForm($(this).attr('action'),$(this).serialize());
+                    submitQuestionForm($(this).attr('action'), $(this).serialize());
                 });
+
+                $('.add-q-options').on("click", function (e) {
+                    if (i < max)
+                    {
+                        i++;
+                        var option = "<div class='option mb-2'><input type='text' name='options[]'><p class='fa fa-times-circle del-option'></p></div>";
+                        $(".options-text").append(option);
+                    }
+                });
+                $('.add-q-perseptions').on("click", function (e) {
+                    if (p < max)
+                    {
+                        p++;
+
+                        var perseption = "<div class='perseption mb-2'><input type='text' name='perseptions[]'><p class='fa fa-times-circle del-perseption'></p></div>";
+                        $(".perseptions-text").append(perseption);
+                    }
+                });
+
+                $('body').on("click", ".del-option", function () {
+                    $(this).closest(".option").remove();
+                    i--;
+
+                });
+
+                $('body').on("click", ".del-perseption", function () {
+                    $(this).closest(".perseption").remove();
+                    p--;
+
+                });
+
             }
         });
     }
-    
-    
+
     function submitQuestionForm(url, data)
     {
         $.ajax({
