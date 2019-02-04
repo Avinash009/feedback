@@ -13,7 +13,7 @@
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <input type="hidden" class="projectId" name="projectId" value="-1">
+                        <input type="hidden" class="projectId" name="project_id" value="-1">
                         
                         {{ csrf_field() }}
                         <label for="project-name">Project name:</label>

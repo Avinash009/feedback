@@ -42,9 +42,15 @@ Route::group(['middleware' => 'auth'], function() {
         'uses' => 'ProjectController@edit',
         'as' => 'project.edit'
     ]);
+    Route::post('/project/delete/{id}', [
+        'uses' => 'ProjectController@destroy',
+        'as' => 'project.delete'
+    ]);
+    
     Route::get('/project/{id}', [
         'uses' => 'QuestionController@view',
         'as' => 'questions.view'
+        
     ]);
 
     Route::get('/project/{id}/questions/list', [
