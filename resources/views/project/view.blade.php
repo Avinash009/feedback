@@ -22,6 +22,7 @@
 @section('scripts')
 <script type="text/html" id="project-cards">
     <div class="column">
+        <i class="fa fa-times-circle delete-project" data-project_id="{id}"></i>
         <div class="card">
             <i class="fas fa-edit edit-project" data-project_id="{id}"></i>
             <a href="/project/{id}">
@@ -35,10 +36,10 @@
     var projects_empty = $('.empty-projects');
     var projects_list = $('.projects-list');
     var edit_project = $('.edit-project');
-    var built_html = '';
     var loader = $('.loader');
     function getProjects()
     {
+        var built_html = '';
         $.ajax({
             url: "{{route('projects.list')}}",
             type: "GET",
@@ -54,7 +55,7 @@
                 } else
                 {
                     projects_empty.hide();
-
+                    
                     $.each(response.projects, function () {
                         var project_cards_html = $('#project-cards').html();
                         project_cards_html = project_cards_html.replace(/{id}/g, this.id);
@@ -67,27 +68,46 @@
                     
                     $('.edit-project').on('click',function(){
                         var project_id = $(this).data('project_id');
-//                        var project_id = $('.edit-project').data('project_id');
-//                        console.log( project_id);
-//                        return;
                         var project_modal = $("#project-modal");
                             project_modal.modal("show");
                             $(".project-modal-title").html("Edit Project");
                             $(".project-submit").html("Update");
                         var url = '{{ route("project.edit", ":id") }}';
-//                            url.replace(/{id}/g, $(this).data('project_id'))    
                             url = url.replace(':id', project_id);
-                            
                             $.ajax({
                                 url:url,
                                 type:'GET',
+                                data:$('#project-form').serialize(),
                                 success:function(project){
                                     console.log(project);
                                     project_modal.find(".projectName").val(project.name);
                                     project_modal.find(".projectId").val(project.id);
+                                },
+                                error: function(response)
+                                {
+                                    console.log(response)
                                 }
                             });
                     });
+                    $('.delete-project').on("click", function(){
+                        var project_id = $(this).data('project_id');
+                        var url = '{{ route("project.delete", ":id") }}';
+                            url = url.replace(':id', project_id);
+                        console.log(project_id)
+                        $.ajax({
+                                url:url,
+                                type:'POST',
+                                data:{id:project_id, _token: '{{csrf_token()}}'},
+                                success: function(reponse){
+                                    console.log(reponse);
+                                    //alert();
+                                },
+                                error: function(response)
+                                {
+                                    console.log(response)
+                                }
+                            });
+                    })
                 }
             }
         });

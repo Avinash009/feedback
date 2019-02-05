@@ -72,7 +72,7 @@
                          create_project_url: '{{route("project.create", "-1")}}'
                      }, 
             };
-            
+           console.log($('.projectId').val()); 
     </script>
         @yield('scripts')
     </body>

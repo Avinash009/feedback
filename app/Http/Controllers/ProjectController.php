@@ -59,14 +59,13 @@ class ProjectController extends Controller {
                         'errors' => $validator->getMessageBag()->toArray()
             ));
         }
-        print_r($project_id);
-        die();
+        
         $newProject = Project::updateOrCreate(['id' => $project_id],[
             'name' => $request->projectName,
             'user_id' => Auth::user()->id,
         ]);
         if (!$newProject) {
-            return Response()->json(array('fail' => 'Some thing went wrong'));
+            return Response()->json(array('fail' => 'Something went wrong'));
         }
 
         return Response()->json(array('success' => 'Project created successfully'));
@@ -125,7 +124,14 @@ class ProjectController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        //
+        if (Project::destroy($id)) {
+            return Response()->json(array('success' => 'Project deleted successfully'));
+        }
+        else{
+            return Response()->json(array('error' => 'Something went wrong'));
+        }
+        
+        die();
     }
 
 }
