@@ -2,7 +2,7 @@
 @section('content')
 <div class="question-view">
     <div class="create-question-top text-right">
-        <button type="button" class="create-modal btn btn-primary" data-toggle="modal" data-target="#question-modal">
+        <button type="button" class="create-modal btn btn-primary" data-toggle="modal">
             Create question
         </button>
     </div>  
@@ -17,11 +17,14 @@
         @include('includes.loader')
     </div>
 </div>
-@include('includes.question-modal')
+<div class="modal-section">
+
+</div>
 @endsection
 @section('scripts')
 <script type="text/html" id="question-cards">
     <div class="column">
+        <i class="fas fa-edit edit-question" data-question_id="{id}"></i>
         <a href="">
             <div class="card">
                 <h3>{question_name}</h3>
@@ -38,6 +41,7 @@
     var loader = $('.loader');
     var question_form = $('#question-form');
     var create_modal = $('.create-modal');
+    var edit_question = $('.edit-question');
 //    $('.project-id').val(project_id);
     getAllQuestions();
     function getAllQuestions()
@@ -64,11 +68,17 @@
                         var question_cards_html = $('#question-cards').html();
                         question_cards_html = question_cards_html.replace("{question_name}", this.question);
                         question_cards_html = question_cards_html.replace("{created_at}", this.created_at);
+                        question_cards_html = question_cards_html.replace("{id}", this.id);
                         built_html += question_cards_html;
                     });
                     questions_list.html(built_html);
                     loader.hide();
                 }
+                console.log($('.edit-question'));
+                $('.edit-question').on('click', function(){
+                   editQuestion($(this).data('question_id')); 
+                });
+                
             }
         });
         var i = -1;
@@ -109,31 +119,55 @@
 
         });
     }
-    create_modal.on('click',function(e){
+    create_modal.on('click', function (e) {
         e.preventDefault();
         var url = "{{ route('question.open.modal', [':id', ':question_id']) }}";
         url = url.replace(/:id/, project_id);
         url = url.replace(/:question_id/, -1);
         console.log(url);
         $.ajax({
-            url:url,
-            type:"GET",
-            success:function(response){
-                console.log(response);
+            url: url,
+            type: "GET",
+            success: function (response) {
+                $('.modal-section').html(response);
+                $('#question-modal').modal('show');
+               
             }
         });
     });
-    question_form.on('submit', function (e) {
-        e.preventDefault();
-        var question_form_url = $(this).attr('action');
+    
+    function editQuestion(question_id)
+    {
+        var url = "{{route('question.open.modal',[':id', ':question_id'])}}";
+        url = url.replace(/:id/, project_id);
+        url = url.replace(/:question_id/, question_id);
         $.ajax({
-            url: question_form_url,
+            url: url,
+            type: "GET",
+            success: function (response) {
+                console.log(response);
+                $('.modal-section').html(response);
+                $('#question-modal').modal('show');
+                 console.log($('#question-form'));
+                $('#question-form').on('submit', function(e){
+                    e.preventDefault();
+                    submitQuestionForm($(this).attr('action'),$(this).serialize());
+                });
+            }
+        });
+    }
+    
+    
+    function submitQuestionForm(url, data)
+    {
+        $.ajax({
+            url: url,
             type: "POST",
-            data: $(this).serialize(),
+            data: data,
             success: function (response) {
                 console.log(response);
             }
         });
-    });
+    }
 </script>
 @endsection

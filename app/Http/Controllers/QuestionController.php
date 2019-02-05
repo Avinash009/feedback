@@ -40,21 +40,28 @@ class QuestionController extends Controller {
     public function openModal($id, $question_id)
     {
         $question = '';
+        $question_options = '';
+        $perseptions = '';
         if($question_id == '-1')
         {
            $question = new Question(); 
         }
         else
         {
-           $question = Question::find($question_id); 
+           $question = Question::find($question_id);
+           $question_options = Question::find($question_id)->questionOptions;
+           $perseptions = Question::find($question_id)->perseptions;
         }
-
+       
         $view = View::make('includes/question-modal', [
             'question' => $question,
-            'project_id' => $id
+            'project_id' => $id,
+            'question_options' => $question_options,
+            'perseptions' => $perseptions
         ]);
         
         $Question_modal_html = $view->render();
+        
         return $Question_modal_html;
     }
     /**
@@ -75,7 +82,8 @@ class QuestionController extends Controller {
 
         $options = $request->options;
         $perseptions = $request->perseptions;
-
+        print_r($options);
+        die();
         if (!empty($options)) {
             foreach ($options as $option) {
                 if (empty($option)) {
