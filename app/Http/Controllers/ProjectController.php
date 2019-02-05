@@ -59,6 +59,8 @@ class ProjectController extends Controller {
                         'errors' => $validator->getMessageBag()->toArray()
             ));
         }
+        print_r($project_id);
+        die();
         $newProject = Project::updateOrCreate(['id' => $project_id],[
             'name' => $request->projectName,
             'user_id' => Auth::user()->id,

@@ -73,7 +73,7 @@ class QuestionController extends Controller {
         $validator = Validator::make($request->all(), [
                     'question' => 'required'
         ]);
-
+        
         if ($validator->fails()) {
             return Response()->json(array(
                         'errors' => $validator->getMessageBag()->toArray()
@@ -82,8 +82,8 @@ class QuestionController extends Controller {
 
         $options = $request->options;
         $perseptions = $request->perseptions;
-        print_r($options);
-        die();
+//        print_r($options);
+//        die();
         if (!empty($options)) {
             foreach ($options as $option) {
                 if (empty($option)) {
@@ -98,7 +98,6 @@ class QuestionController extends Controller {
                 }
             }
         }
-
         $question = Question::updateOrCreate(['id' => $question_id], [
                     'user_id' => Auth::user()->id,
                     'question' => $request->question,
@@ -137,7 +136,7 @@ class QuestionController extends Controller {
             }
 
             foreach ($perseptions as $index => $perseption) {
-                $perseption_id = $question_perseptions->isEmpty() ? -1 : $database_options[$index];
+                $perseption_id = $question_perseptions->isEmpty() ? -1 : $database_perseptions[$index];
                 Perseption::updateOrCreate(['id' => $perseption_id], [
                     'perseption' => $perseption,
                     'question_id' => $question->id,

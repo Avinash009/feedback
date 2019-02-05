@@ -69,12 +69,10 @@
     <script>
             var config = {
                      urls:{
-                         create_project_url: '{{route("project.create", ":id")}}'
+                         create_project_url: '{{route("project.create", "-1")}}'
                      }, 
             };
-            config.urls.create_project_url.replace(':id', $('.edit-project').data('project_id'));
-                           
-           console.log(config.urls.create_project_url);
+            
     </script>
         @yield('scripts')
     </body>

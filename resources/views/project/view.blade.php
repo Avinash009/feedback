@@ -34,7 +34,7 @@
 <script>
     var projects_empty = $('.empty-projects');
     var projects_list = $('.projects-list');
-    var edit_project = $('edit-project');
+    var edit_project = $('.edit-project');
     var built_html = '';
     var loader = $('.loader');
     function getProjects()
@@ -67,15 +67,17 @@
                     
                     $('.edit-project').on('click',function(){
                         var project_id = $(this).data('project_id');
-                        var project_id = $('.edit-project').data('project_id');
+//                        var project_id = $('.edit-project').data('project_id');
+//                        console.log( project_id);
+//                        return;
                         var project_modal = $("#project-modal");
                             project_modal.modal("show");
                             $(".project-modal-title").html("Edit Project");
                             $(".project-submit").html("Update");
                         var url = '{{ route("project.edit", ":id") }}';
-                            //url.replace(/{id}/g, $(this).data('project_id'))    
+//                            url.replace(/{id}/g, $(this).data('project_id'))    
                             url = url.replace(':id', project_id);
-                            console.log(url)
+                            
                             $.ajax({
                                 url:url,
                                 type:'GET',
