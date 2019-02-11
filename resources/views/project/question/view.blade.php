@@ -194,7 +194,7 @@
             type: "POST",
             data: data,
             success: function (response) {
-                console.log(response);
+                location.reload();
             }
         });
     }

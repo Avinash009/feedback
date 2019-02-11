@@ -82,8 +82,7 @@ class QuestionController extends Controller {
 
         $options = $request->options;
         $perseptions = $request->perseptions;
-//        print_r($options);
-//        die();
+
         if (!empty($options)) {
             foreach ($options as $option) {
                 if (empty($option)) {
