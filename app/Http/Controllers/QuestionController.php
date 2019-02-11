@@ -107,6 +107,7 @@ class QuestionController extends Controller {
 
         $question_options = '';
         if (!empty($question->id)) {
+            
             $question_options = QuestionOption::where('question_id', '=', $question->id)->get();
             $database_options = [];
             if (!$question_options->isEmpty()) {
@@ -117,7 +118,15 @@ class QuestionController extends Controller {
             }
             
             foreach ($options as $index => $option) {
-                $option_id = $question_options->isEmpty() ? -1 : $database_options[$index];
+                $option_id;
+                if(array_key_exists($index, $database_options))
+                {
+                    $option_id = $database_options[$index];
+                }
+                else
+                {
+                    $option_id = -1;
+                }
                 QuestionOption::updateOrCreate(['id' => $option_id], [
                     'option' => $option,
                     'question_id' => $question->id,
@@ -134,7 +143,15 @@ class QuestionController extends Controller {
             }
 
             foreach ($perseptions as $index => $perseption) {
-                $perseption_id = $question_perseptions->isEmpty() ? -1 : $database_perseptions[$index];
+                $perseption_id;
+                if(array_key_exists($index, $database_perseptions))
+                {
+                    $perseption_id = $database_perseptions[$index];
+                }
+                else
+                {
+                    $perseption_id = -1;
+                }
                 Perseption::updateOrCreate(['id' => $perseption_id], [
                     'perseption' => $perseption,
                     'question_id' => $question->id,
