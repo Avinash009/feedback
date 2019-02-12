@@ -55,6 +55,8 @@
             url: url,
             type: 'GET',
             success: function (response) {
+                questions_list.html('');
+
                 var count = Object.keys(response.questions).length;
                 if (count < 1)
                 {
@@ -99,7 +101,7 @@
                 $('#question-modal').modal('show');
                 $('#question-form').on('submit', function (e) {
                     e.preventDefault();
-                    submitQuestionForm($(this).attr('action'), $(this).serialize());
+                    submitQuestionForm($(this).attr('action'), $(this).serialize(), $(this).find('.question-error'),$(this).find('.bottom-message-success'),$(this).find('.bottom-message-error'),$(this).closest('#question-modal').find('.close'));
                 });
 
                 $('.add-q-options').on("click", function (e) {
@@ -150,7 +152,7 @@
                 console.log($('#question-form'));
                 $('#question-form').on('submit', function (e) {
                     e.preventDefault();
-                    submitQuestionForm($(this).attr('action'), $(this).serialize());
+                    submitQuestionForm($(this).attr('action'), $(this).serialize(), $('.question').closest('form-group').find('.error'),$('.bottom-messages').find('.error'),$('.bottom-messages').find('.success'),$(this).closest('#question-modal').find('.close'));
                 });
 
                 $('.add-q-options').on("click", function (e) {
@@ -187,14 +189,41 @@
         });
     }
 
-    function submitQuestionForm(url, data)
+    function submitQuestionForm(url, data, question_element, bottom_success, bottom_error, close_element)
     {
         $.ajax({
             url: url,
             type: "POST",
             data: data,
             success: function (response) {
-                location.reload();
+                if(response.success != '')
+                {
+                    bottom_success.html(response.success);
+                    console.log(close_element);
+                    setTimeout(function(){
+                        close_element.click();
+                        location.reload();
+                    }, 1000);
+                    
+                }
+                else
+                {
+                    console.log(response);
+                    if(response.errors.question != '')
+                    {
+                        question_element.html(response.errors.question);
+                    }
+                    if(response.options!= '')
+                    {
+                        bottom_error.html(response.options);
+                    }
+                    if(response.perseptions !='')
+                    {
+                        bottom_error.html(response.perseptions);
+                    }
+                }
+                
+
             }
         });
     }

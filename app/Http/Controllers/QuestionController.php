@@ -76,24 +76,26 @@ class QuestionController extends Controller {
         
         if ($validator->fails()) {
             return Response()->json(array(
-                        'errors' => $validator->getMessageBag()->toArray()
+                        'errors' => $validator->getMessageBag()->toArray(),
+                        'options' => '',
+                        "success"=>""
             ));
         }
 
         $options = $request->options;
         $perseptions = $request->perseptions;
-
+       
         if (!empty($options)) {
             foreach ($options as $option) {
                 if (empty($option)) {
-                    return Response()->json(array("options" => "options can't be empty"));
+                    return Response()->json(array("success"=>"","errors" => "" ,"options" => "options can't be empty", "preseptions"=>""));
                 }
             }
         }
         if (!empty($perseptions)) {
             foreach ($perseptions as $perseption) {
                 if (empty($perseption)) {
-                    return Response()->json(array("perseptions" => "perseptions can't be empty"));
+                    return Response()->json(array("success"=>"","errors" => "","options"=>"" ,"perseptions" => "perseptions can't be empty"));
                 }
             }
         }
@@ -151,13 +153,18 @@ class QuestionController extends Controller {
                 {
                     $perseption_id = -1;
                 }
+               
                 Perseption::updateOrCreate(['id' => $perseption_id], [
                     'perseption' => $perseption,
                     'question_id' => $question->id,
                     'project_id' => $id,
                 ]);
+
+                
             }
-        } else {
+            return Response()->json(array("success"=>"Successfully added"));
+        } 
+        else {
             return Response()->json(array("500" => "some thing went wrong"));
         }
     }

@@ -17,8 +17,8 @@
                     <div class="form-group">
                         {{ csrf_field() }}
                         <label for="question">Question:</label>
-                        <input type="text" class="form-control" name="question" placeholder="rate the taste" value="<?php echo empty($question->question) ? "" : $question->question ?>">
-                        <span class="error"></span>
+                        <input type="text" class="form-control question" name="question" placeholder="rate the taste" value="<?php echo empty($question->question) ? "" : $question->question ?>">
+                        <span class="question-error"></span>
                     </div>
                     <div class="row">
                         <!--<div class="col-md-12">-->
@@ -64,7 +64,8 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <span class='success'></span>
+                    <span class='bottom-message-success'></span>
+                    <span class='bottom-message-error'></span>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
