@@ -149,10 +149,10 @@
                 console.log(response);
                 $('.modal-section').html(response);
                 $('#question-modal').modal('show');
-                console.log($('#question-form'));
                 $('#question-form').on('submit', function (e) {
                     e.preventDefault();
-                    submitQuestionForm($(this).attr('action'), $(this).serialize(), $('.question').closest('form-group').find('.error'),$('.bottom-messages').find('.error'),$('.bottom-messages').find('.success'),$(this).closest('#question-modal').find('.close'));
+
+                    submitQuestionForm($(this).attr('action'), $(this).serialize(), $(this).find('.question-error'),$(this).find('.bottom-message-success'),$(this).find('.bottom-message-error'),$(this).closest('#question-modal').find('.close'));
                 });
 
                 $('.add-q-options').on("click", function (e) {
@@ -191,13 +191,16 @@
 
     function submitQuestionForm(url, data, question_element, bottom_success, bottom_error, close_element)
     {
+        console.log(close_element);
         $.ajax({
             url: url,
             type: "POST",
             data: data,
             success: function (response) {
+                console.log(response);
                 if(response.success != '')
                 {
+                    console.log(close_element);
                     bottom_success.html(response.success);
                     console.log(close_element);
                     setTimeout(function(){
@@ -208,7 +211,6 @@
                 }
                 else
                 {
-                    console.log(response);
                     if(response.errors.question != '')
                     {
                         question_element.html(response.errors.question);
