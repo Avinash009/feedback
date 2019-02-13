@@ -24,7 +24,8 @@
     <div class="column">
         <i class="fa fa-times-circle delete-project" data-project_id="{id}"></i>
         <div class="card">
-            <i class="fas fa-edit edit-project" data-project_id="{id}"></i>
+            <div><i class="fas fa-edit edit-project" data-project_id="{id}"></i></div>
+            <div><a href="{all_questions_url}"><i class="fas fa-check-square all-questions"></a></i></div>
             <a href="/project/{id}">
                 <h3>{project_name}</h3>
                 <p>{created_at}</p>
@@ -37,6 +38,7 @@
     var projects_list = $('.projects-list');
     var edit_project = $('.edit-project');
     var loader = $('.loader');
+    var all_questions = $('.all-questions');
     function getProjects()
     {
         var built_html = '';
@@ -61,6 +63,7 @@
                         project_cards_html = project_cards_html.replace(/{id}/g, this.id);
                         project_cards_html = project_cards_html.replace("{project_name}", this.name);
                         project_cards_html = project_cards_html.replace("{created_at}", this.created_at);
+                        project_cards_html = project_cards_html.replace("{all_questions_url}", "/project/"+this.id+"/questions/all");
                         built_html += project_cards_html;
                     });
                     projects_list.html(built_html);
@@ -107,7 +110,22 @@
                                     console.log(response)
                                 }
                             });
-                    })
+                    });
+//                    $('.all-questions').on('click',function(e){
+//                        e.preventDefault();
+//                        var project_id = $(this).data('project_id');
+//                        var url = '{{ route("project.questions.all", ":id") }}';
+//                            url = url.replace(':id', project_id);
+//                            
+//                        $.ajax({
+//                          url:url,
+//                          type:"GET",
+//                          success:function(response)
+//                          {
+//                              console.log(response);
+//                          }
+//                        });
+//                    });
                 }
             }
         });

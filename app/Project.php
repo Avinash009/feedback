@@ -9,4 +9,9 @@ class Project extends Model
    protected $fillable = [
       'name', 'user_id',
     ];
+   
+   public function questions()
+   {
+       return $this->hasMany('App\Question');
+   }
 }

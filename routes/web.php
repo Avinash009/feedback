@@ -72,6 +72,11 @@ Route::group(['middleware' => 'auth'], function() {
         'uses' => 'QuestionController@create',
         'as' => 'question.edit'
     ]);
+    
+    Route::get('/project/{id}/questions/all',[
+        'uses' => 'ProjectController@listAllQuestions',
+        'as'   => 'project.questions.all'
+    ]);
 });
 
 

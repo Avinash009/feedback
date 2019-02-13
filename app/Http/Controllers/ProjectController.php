@@ -84,7 +84,47 @@ class ProjectController extends Controller {
     public function store(Request $request) {
         //
     }
-
+    
+    public function listAllQuestions($id)
+    {
+        $questions = Project::find($id)->questions;
+        $data = [
+            [
+           'question' => [
+            'question_data' => [],
+            'options' => [],
+            'perseptions' => [],
+            ]
+             ]
+        ];
+        
+        $count = 0;
+        foreach($questions as $question){
+            
+           $data[$count]['question']['question_data'] = ['id'=>$question->id,'question'=>$question->question];
+           
+           $options = $question->questionOptions;
+           $persiptions = $question->perseptions;
+           
+           foreach($options as $option){
+               $data[$count]['question']['options'][] = ['option_id'=>$option->id,'option' => $option->option];
+           }
+           
+           
+           foreach($persiptions as $perseption)
+           {
+               $data[$count]['question']['perseptions'][] = ['perseption_id'=>$perseption->id, 'perseption'=>$perseption->perseption];
+           }
+           
+           $count++;
+        }
+//        echo "<pre>";
+//        print_r($data);
+//        die();
+        $questions = json_encode($data);
+        return view('responses.questions')->with('questions',$questions);
+        
+    }
     /**
      * Display the specified resource.
      *

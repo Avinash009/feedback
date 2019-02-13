@@ -19,4 +19,9 @@ class Question extends Model
     {
         return $this->hasMany('App\Perseption');
     }
+    
+    public function project()
+    {
+        return $this->belongsTo('App\Project');
+    }
 }
