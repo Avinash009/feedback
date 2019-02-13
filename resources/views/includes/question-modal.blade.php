@@ -32,6 +32,9 @@
                                             <div class='option mb-2'><input type='text' value="<?php echo $option->option ?>" name='options[]'><p class='fa fa-times-circle del-option'></p></div>
                                             @endforeach
                                         <?php endif; ?>
+                                        <?php if(empty($question_options)): ?>
+                                            <div class='option mb-2'><input type='text' name='options[]'></div>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="add-options">
                                         <p class="fa fa-plus fa-lg add-q-options"></p>
@@ -49,6 +52,10 @@
                                             <div class='perseption mb-2'><input type='text' value='<?php echo $perseption->perseption ?>' name='perseptions[]'><p class='fa fa-times-circle del-perseption'></p></div>
                                             @endforeach
                                         <?php endif; ?>
+                                        <?php if(empty($perseptions)):?>
+                                            <div class='perseption mb-2'><input type='text' name='perseptions[]'>
+                                            </div>
+                                        <?php endif;?>
                                     </div>
                                 </div>
                                 <div class="add-perseption">
