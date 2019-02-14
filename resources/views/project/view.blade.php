@@ -34,7 +34,7 @@
 <!--            <div>	
                 <i class="fa fa-instagram fa-3x" aria-hidden="true"></i>
             </div>-->
-            <a href="{all_questions_url}" class="all-questions">All question</a>
+            <a href="{all_questions_url}" class="all-questions">Take feedback</a>
         </div>
     </div>	
 </script>

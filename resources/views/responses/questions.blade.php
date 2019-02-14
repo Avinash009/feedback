@@ -38,6 +38,6 @@
   </a>
 </div>
 <?php else: ?>
-<h1>Yoy have not created any questions yet.</h1>
+<h1 class="text-center">You have not created any questions yet to take feedback</h1>
 <?php endif; ?>
 @endsection
