@@ -39,6 +39,73 @@
   animation: spin 2s linear infinite;
 }
 
+
+/*Hari*/
+body 
+{
+	color: #4A4D5A;
+	background-color: #045ffd1a !important;
+}
+
+.project-title, .question-title
+{
+	font-size: 23px;
+}
+a{
+	text-decoration:none; 
+	color: #4A4D5A;
+	border-bottom:2px solid #4A4D5A;
+}
+a:hover
+{
+	text-decoration: none;
+}
+.box-part{
+	background:#FFF;
+	border-radius:0;
+	padding:10px;
+        padding-bottom: 20px;
+	margin:15px 0px;
+	position: relative;
+}
+.box-part:hover
+{
+	box-shadow: 1px 1px 7px 1px rgba(0,0,0,.2);
+	transition-duration: 0.10s;
+}
+.project-description, .question-description{
+	margin:20px 0px;
+	color: #8C8C8C;
+	font-size:15px;
+}
+
+.fa{
+	color: #4A4D5A;
+}
+.edit-project, .edit-question
+{
+	position: absolute;
+	top: 2%;
+	left: 5%;
+	cursor: pointer;
+	display: none;
+}
+.delete-project, .delete-question
+{
+	position: absolute;
+	top: 2%;
+	right: 5%;
+	color: red;
+	cursor: pointer;
+	display: none;
+}
+
+.box-part:hover .edit-project,.box-part:hover .edit-question, .box-part:hover .delete-project,.box-part:hover .delete-question
+{
+	display: block;
+}
+/*End*/
+
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
   100% { -webkit-transform: rotate(360deg); }

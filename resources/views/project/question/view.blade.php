@@ -23,15 +23,19 @@
 @endsection
 @section('scripts')
 <script type="text/html" id="question-cards">
-    <div class="column">
-        <i class="fas fa-edit edit-question" data-question_id="{id}"></i>
-        <a href="">
-            <div class="card">
-                <h3>{question_name}</h3>
-                <p>{created_at}</p>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+        <div class="box-part text-center">
+            <i class="fa fa-edit edit-question" data-question_id="{id}"></i>
+            <i class="fa fa-times delete-question" data-question_id="{id}"></i>
+            <div class="title">
+                <a class="question-title" href="#">{question_name}</a>
             </div>
-        </a>
-    </div>
+            <div class="question-description">
+                <p class="question-date px-2">{created_at}</p>
+            </div>
+            <a href="#">Learn More</a>
+        </div>
+    </div>	 
 </script>
 <script>
     var project_id = '{{$project_id}}';
@@ -101,7 +105,7 @@
                 $('#question-modal').modal('show');
                 $('#question-form').on('submit', function (e) {
                     e.preventDefault();
-                    submitQuestionForm($(this).attr('action'), $(this).serialize(), $(this).find('.question-error'),$(this).find('.bottom-message-success'),$(this).find('.bottom-message-error'),$(this).closest('#question-modal').find('.close'));
+                    submitQuestionForm($(this).attr('action'), $(this).serialize(), $(this).find('.question-error'), $(this).find('.bottom-message-success'), $(this).find('.bottom-message-error'), $(this).closest('#question-modal').find('.close'));
                 });
 
                 $('.add-q-options').on("click", function (e) {
@@ -152,7 +156,7 @@
                 $('#question-form').on('submit', function (e) {
                     e.preventDefault();
 
-                    submitQuestionForm($(this).attr('action'), $(this).serialize(), $(this).find('.question-error'),$(this).find('.bottom-message-success'),$(this).find('.bottom-message-error'),$(this).closest('#question-modal').find('.close'));
+                    submitQuestionForm($(this).attr('action'), $(this).serialize(), $(this).find('.question-error'), $(this).find('.bottom-message-success'), $(this).find('.bottom-message-error'), $(this).closest('#question-modal').find('.close'));
                 });
 
                 $('.add-q-options').on("click", function (e) {
@@ -198,33 +202,32 @@
             data: data,
             success: function (response) {
                 console.log(response);
-                if(response.success != '')
+                if (response.success != '')
                 {
                     console.log(close_element);
                     bottom_success.html(response.success);
                     console.log(close_element);
-                    setTimeout(function(){
+                    setTimeout(function () {
                         close_element.click();
                         location.reload();
                     }, 1000);
-                    
-                }
-                else
+
+                } else
                 {
-                    if(response.errors.question != '')
+                    if (response.errors.question != '')
                     {
                         question_element.html(response.errors.question);
                     }
-                    if(response.options!= '')
+                    if (response.options != '')
                     {
                         bottom_error.html(response.options);
                     }
-                    if(response.perseptions !='')
+                    if (response.perseptions != '')
                     {
                         bottom_error.html(response.perseptions);
                     }
                 }
-                
+
 
             }
         });

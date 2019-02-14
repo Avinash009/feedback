@@ -10,33 +10,31 @@ use Auth;
 
 class ProjectController extends Controller {
 
-    /** 
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-   
     public function index() {
         //
     }
 
     public function view() {
-       return view('project.view');
+        return view('project.view');
     }
-    
-    public function getList()
-    {
-         if (count($this->getAllProjects()) > 0) {
+
+    public function getList() {
+        if (count($this->getAllProjects()) > 0) {
             return Response()->json(array(
                         'projects' => $this->getAllProjects()
             ));
         }
-        
+
         return Response()->json(array(
-                        'projects' => array()
-            ));
+                    'projects' => array()
+        ));
     }
-    
+
     public function viewProjects() {
         if (count($this->getAllProjects()) < 1) {
             return redirect()->route('project.view', array());
@@ -59,10 +57,10 @@ class ProjectController extends Controller {
                         'errors' => $validator->getMessageBag()->toArray()
             ));
         }
-        
-        $newProject = Project::updateOrCreate(['id' => $project_id],[
-            'name' => $request->projectName,
-            'user_id' => Auth::user()->id,
+
+        $newProject = Project::updateOrCreate(['id' => $project_id], [
+                    'name' => $request->projectName,
+                    'user_id' => Auth::user()->id,
         ]);
         if (!$newProject) {
             return Response()->json(array('fail' => 'Something went wrong'));
@@ -84,47 +82,50 @@ class ProjectController extends Controller {
     public function store(Request $request) {
         //
     }
-    
-    public function listAllQuestions($id)
-    {
+
+    public function listAllQuestions($id) {
         $questions = Project::find($id)->questions;
-        $data = [
-            [
-           'question' => [
-            'question_data' => [],
-            'options' => [],
-            'perseptions' => [],
-            ]
-             ]
-        ];
-        
-        $count = 0;
-        foreach($questions as $question){
-            
-           $data[$count]['question']['question_data'] = ['id'=>$question->id,'question'=>$question->question];
-           
-           $options = $question->questionOptions;
-           $persiptions = $question->perseptions;
-           
-           foreach($options as $option){
-               $data[$count]['question']['options'][] = ['option_id'=>$option->id,'option' => $option->option];
-           }
-           
-           
-           foreach($persiptions as $perseption)
-           {
-               $data[$count]['question']['perseptions'][] = ['perseption_id'=>$perseption->id, 'perseption'=>$perseption->perseption];
-           }
-           
-           $count++;
+
+        if (count($questions) > 0) {
+            $data = [
+                [
+                    'question' => [
+                        'question_data' => [],
+                        'options' => [],
+                        'perseptions' => [],
+                    ]
+                ]
+            ];
+            $count = 0;
+            foreach ($questions as $question) {
+
+                $data[$count]['question']['question_data'] = ['id' => $question->id, 'question' => $question->question];
+
+                $options = $question->questionOptions;
+                $persiptions = $question->perseptions;
+
+                foreach ($options as $option) {
+                    $data[$count]['question']['options'][] = ['option_id' => $option->id, 'option' => $option->option];
+                }
+
+
+                foreach ($persiptions as $perseption) {
+                    $data[$count]['question']['perseptions'][] = ['perseption_id' => $perseption->id, 'perseption' => $perseption->perseption];
+                }
+
+                $count++;
+            }
+        }
+        else
+        {
+            $data = [];
         }
 //        echo "<pre>";
 //        print_r($data);
 //        die();
-        $questions = json_encode($data);
-        return view('responses.questions')->with('questions',$questions);
-        
+        return view('responses.questions')->with('questions', $data);
     }
+
     /**
      * Display the specified resource.
      *
@@ -142,7 +143,7 @@ class ProjectController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-       return Project::find($id);
+        return Project::find($id);
         die();
     }
 
@@ -166,11 +167,10 @@ class ProjectController extends Controller {
     public function destroy($id) {
         if (Project::destroy($id)) {
             return Response()->json(array('success' => 'Project deleted successfully'));
-        }
-        else{
+        } else {
             return Response()->json(array('error' => 'Something went wrong'));
         }
-        
+
         die();
     }
 

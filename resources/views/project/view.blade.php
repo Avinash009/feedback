@@ -21,17 +21,22 @@
 @endsection
 @section('scripts')
 <script type="text/html" id="project-cards">
-    <div class="column">
-        <i class="fa fa-times-circle delete-project" data-project_id="{id}"></i>
-        <div class="card">
-            <div><i class="fas fa-edit edit-project" data-project_id="{id}"></i></div>
-            <div><a href="{all_questions_url}"><i class="fas fa-check-square all-questions"></a></i></div>
-            <a href="/project/{id}">
-                <h3>{project_name}</h3>
-                <p>{created_at}</p>
-            </a>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+        <div class="box-part text-center">
+            <i class="fa fa-edit edit-project" data-project_id="{id}"></i>
+            <i class="fa fa-times delete-project " data-project_id="{id}"></i>
+            <div class="title">
+                <a class="project-title" href="/project/{id}">{project_name}</a>
+            </div>
+            <div class="project-description">
+                <p class="project-date px-2">{created_at}</p>
+            </div>
+<!--            <div>	
+                <i class="fa fa-instagram fa-3x" aria-hidden="true"></i>
+            </div>-->
+            <a href="{all_questions_url}" class="all-questions">All question</a>
         </div>
-    </div>
+    </div>	
 </script>
 <script>
     var projects_empty = $('.empty-projects');
@@ -57,59 +62,59 @@
                 } else
                 {
                     projects_empty.hide();
-                    
+
                     $.each(response.projects, function () {
                         var project_cards_html = $('#project-cards').html();
                         project_cards_html = project_cards_html.replace(/{id}/g, this.id);
                         project_cards_html = project_cards_html.replace("{project_name}", this.name);
                         project_cards_html = project_cards_html.replace("{created_at}", this.created_at);
-                        project_cards_html = project_cards_html.replace("{all_questions_url}", "/project/"+this.id+"/questions/all");
+                        project_cards_html = project_cards_html.replace("{all_questions_url}", "/project/" + this.id + "/questions/all");
                         built_html += project_cards_html;
                     });
                     projects_list.html(built_html);
                     loader.hide();
-                    
-                    $('.edit-project').on('click',function(){
+
+                    $('.edit-project').on('click', function () {
                         var project_id = $(this).data('project_id');
                         var project_modal = $("#project-modal");
-                            project_modal.modal("show");
-                            $(".project-modal-title").html("Edit Project");
-                            $(".project-submit").html("Update");
+                        project_modal.modal("show");
+                        $(".project-modal-title").html("Edit Project");
+                        $(".project-submit").html("Update");
                         var url = '{{ route("project.edit", ":id") }}';
-                            url = url.replace(':id', project_id);
-                            $.ajax({
-                                url:url,
-                                type:'GET',
-                                data:$('#project-form').serialize(),
-                                success:function(project){
-                                    console.log(project);
-                                    project_modal.find(".projectName").val(project.name);
-                                    project_modal.find(".projectId").val(project.id);
-                                },
-                                error: function(response)
-                                {
-                                    console.log(response)
-                                }
-                            });
+                        url = url.replace(':id', project_id);
+                        $.ajax({
+                            url: url,
+                            type: 'GET',
+                            data: $('#project-form').serialize(),
+                            success: function (project) {
+                                console.log(project);
+                                project_modal.find(".projectName").val(project.name);
+                                project_modal.find(".projectId").val(project.id);
+                            },
+                            error: function (response)
+                            {
+                                console.log(response)
+                            }
+                        });
                     });
-                    $('.delete-project').on("click", function(){
+                    $('.delete-project').on("click", function () {
                         var project_id = $(this).data('project_id');
                         var url = '{{ route("project.delete", ":id") }}';
-                            url = url.replace(':id', project_id);
+                        url = url.replace(':id', project_id);
                         console.log(project_id)
                         $.ajax({
-                                url:url,
-                                type:'POST',
-                                data:{id:project_id, _token: '{{csrf_token()}}'},
-                                success: function(reponse){
-                                    console.log(reponse);
-                                    //alert();
-                                },
-                                error: function(response)
-                                {
-                                    console.log(response)
-                                }
-                            });
+                            url: url,
+                            type: 'POST',
+                            data: {id: project_id, _token: '{{csrf_token()}}'},
+                            success: function (reponse) {
+                                console.log(reponse);
+                                //alert();
+                            },
+                            error: function (response)
+                            {
+                                console.log(response)
+                            }
+                        });
                     });
 //                    $('.all-questions').on('click',function(e){
 //                        e.preventDefault();
